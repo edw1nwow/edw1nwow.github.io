@@ -1,60 +1,37 @@
-const keyTrainer = {
-    chars: ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm'],
-    checkPositiveInteger: function (inputData) {
-        const convertData = parseInt(inputData);
-        const revise = (convertData != isNaN && convertData > 0 && convertData < 33 && convertData % 1 === 0);
-        return revise;
-    },
-    setCharCount: function () {
-        let count = prompt('Count of letters', 2);
-        let condition = this.checkPositiveInteger(count);
-        while (!condition) {
-            alert('Letters must be from 1 to 33');
-            count = prompt('Count of letters', 2);
-            condition = this.checkPositiveInteger(count);
-
+const keyboard = [['q','w','e','r','t','y','u','i','o','p','[',']','\\'],['a','s','d','f','g','h','j','k','l',';','\''],['z','x','c','v','b','n','m',',','.','/']];
+ 
+console.log(keyboard);
+function createLayout(){
+    for (let i=0;i<3;i++){
+        for (let j=0;j<keyboard[i].length;j++){
+           let div = document.createElement('div'); 
+            div.innerHTML = keyboard[i][j]; 
+            
+            if (i == 0){
+            div.className = "toprow";
+            const up = document.querySelector(".top")
+                up.appendChild(div, up.firstChild);
+            
         }
-        this.charCount = parseInt(count);
-    },
-    task: [],
-    createTask: function () {
-        let tempArray = [];
-        for (let i = 0; i < this.charCount; i++) {
-            const randomLetter = parseInt(Math.random() * this.chars.length);
-            tempArray.push(this.chars[randomLetter]);
+        else if (i == 1){
+            const up = document.querySelector(".mid")
+                up.appendChild(div, up.firstChild);
+            div.className = "middlerow";
         }
-        this.task = tempArray;
-    },
-    userInput: '',
-    startTask: function () {
-        let tempStr = this.task.join('');
-        this.userInput = prompt(tempStr, );
-
-    },
-    userErrors: function () {
-        const convertToArray = this.userInput.split('');
-        let countErrors = 0;
-
-        for (let i = 0; i < this.task.length; i++) {
-            if (this.task[i] != convertToArray[i]) {
-                countErrors = countErrors + 1;
-            }
-
+        else if(i == 2){
+            const up = document.querySelector(".bot")
+                up.appendChild(div, up.firstChild);
+            div.className = "bottomrow";
+        } 
         }
-        if (countErrors == 0) {
-            alert('well done');
-        } else {
-            alert('You had' + ' ' + countErrors + ' errors');
-        }
-    },
-    run: function () {
-        this.setCharCount();
-        this.createTask();
-        this.startTask();
-        this.userErrors();
-        const result = this.userInput;
-        console.log('result', result)
+       
     }
 }
+createLayout();
 
-keyTrainer.run();
+
+
+
+
+
+ 
