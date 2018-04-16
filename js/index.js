@@ -25,8 +25,8 @@ function createLayout() {
                     button.className = "toprow button";
                     button.setAttribute('data-note', notes[j])
                 }
-                const up = document.querySelector(".mid")
-                up.appendChild(button, up.firstChild);
+                const mid = document.querySelector(".mid")
+                mid.appendChild(button, mid.firstChild);
                 button.className = "middlerow button";
             } else if (i == 2) {
                 if (j > 6) {
@@ -36,13 +36,20 @@ function createLayout() {
                     button.className = "toprow button";
                     button.setAttribute('data-note', notes[j])
                 }
-                const up = document.querySelector(".bot")
-                up.appendChild(button, up.firstChild);
+                const bot = document.querySelector(".bot")
+                bot.appendChild(button, bot.firstChild);
                 button.className = "bottomrow button";
             }
         }
     }
 }
+
+
+const checker = document.querySelector(".checkBox");
+
+
+
+
 
 
 const playSound = note => {
@@ -52,7 +59,7 @@ const playSound = note => {
 };
 
 
-const checker = document.querySelector(".checkBox");
+
 
 function recall() {
     if (checker.checked == true) {
@@ -74,14 +81,14 @@ function callback() {
             if (letter == keyboard[i][j]) {
                 temp.innerHTML += letter;
                 if (i == 0) {
-                    const tt = document.querySelectorAll(".toprow");
-                    tt[j].className = "toprow button keyboard__btn--active";
+                    const findAllClass = document.querySelectorAll(".toprow");
+                    findAllClass[j].className = "toprow button keyboard__btn--active";
                 } else if (i == 1) {
-                    const tt = document.querySelectorAll(".middlerow");
-                    tt[j].className = "middlerow button keyboard__btn--active";
+                    const findAllClass = document.querySelectorAll(".middlerow");
+                    findAllClass[j].className = "middlerow button keyboard__btn--active";
                 } else {
-                    const tt = document.querySelectorAll(".bottomrow");
-                    tt[j].className = "bottomrow button keyboard__btn--active";
+                    const findAllClass = document.querySelectorAll(".bottomrow");
+                    findAllClass[j].className = "bottomrow button keyboard__btn--active";
                 }
             }
         }
@@ -90,12 +97,13 @@ function callback() {
 }
 
 function callOut() {
-    let tr = document.querySelector(".keyboard__btn--active");
-    tr.classList.remove("keyboard__btn--active");
+    let findClassToRemove = document.querySelector(".keyboard__btn--active");
+    findClassToRemove.classList.remove("keyboard__btn--active");
 }
 
 
 
-checker.addEventListener("click", recall);
+
 window.addEventListener("keydown", callback);
 createLayout();
+checker.addEventListener("click", recall);
