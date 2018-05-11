@@ -116,8 +116,14 @@ function StartStop() {
         console.log(readout);
         //Если правильно введено и результат лучше перезаписываем localStorage
         if (findKeyboardClass.textContent == 'qryte') {
-            alert('Good Job!')
-            if (readout < data) {
+            alert('Good Job!'+ ' ' + readout)
+            
+            if (localStorage.getItem('bestResult') == null){
+                localStorage.setItem('bestResult', data);
+            }
+            
+            localStorage.setItem('bestResult', readout);
+            if (readout < localStorage.getItem('bestResult')) {
                 localStorage.setItem('bestResult', readout);
                 data = localStorage.getItem('bestResult');
             }
