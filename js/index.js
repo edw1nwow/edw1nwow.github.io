@@ -1,123 +1,71 @@
-const getUsers = document.querySelector('#btn-users');
-const outputUsers = document.querySelector('#output-users');
-const outputUser = document.querySelector('#output-user');
-const userById = document.querySelector('#btn-user');
-const submit = document.querySelector('#sbmt');
-const delet = document.querySelector('#btn-dlt');
-const remove = document.querySelector('#btn-remove');
+const timertext = document.querySelector('#timer');
+const start = document.querySelector('#start');
+const stop = document.querySelector('#stop');
+let clocktimer;
 
-const getAllUsers = () => {
+class Timer {
+  constructor(startTime, stopTime, interval) {
+    this.startTime = startTime;
+    this.stopTime = stopTime;
+    this.interval = interval;
+  }
 
-    fetch(" https://test-users-api.herokuapp.com/users/")
-        .then(response => {
-            if (response.ok) return response.json();
-            throw new Error("Error");
-        })
-        .then(data1 => {
-            console.log("Clients list:", data1);
-            const obj = data1;
-            console.log(obj.data.length)
-
-            for (let i = 0; i < obj.data.length; i++) {
-                const parentP = document.createElement('tr');
-                parentP.classList.add(`class${i}`);
-                outputUsers.append(parentP);
-                console.log(JSON.stringify(obj.data[i]))
-                parentP.textContent = JSON.stringify(obj.data[i]);
-            }
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        })
+  start () {  
+    clocktimer = setInterval("startTIME()", 9);
+    Timer.startTime = timertext.textContent;
+  }
+  
+  stop () {
+       clearInterval(clocktimer);
+     Timer.stopTime = timertext.textContent;
+    console.log(Timer.startTime)
+      console.log(Timer.stopTime)
+    Timer.interval =  parseInt(Timer.stopTime) - parseInt(Timer.startTime);
+    console.log(Timer.interval);
+  } 
 }
 
+let firstExample = new Timer(14, 20, 6);
+console.log(firstExample);
+
+let secondExample = new Timer(1556, 5959, 4844);
+console.log(secondExample);
+
+const counter = function () {
+  let count = 0;
+      return function () {
+         count++
+  }
+}; 
+const visualTimer = counter();
+
+function startTIME() {
+  let d = setInterval(visualTimer, 1);
+  let t =d;
+  let ms = t%1000;
+  ms=Math.floor(ms);
+  t = Math.floor (t/1000);
+  let s = t%60;
+  t = Math.floor (t/60);
+  let m = t%60;
+  t = Math.floor (t/60);
+  if (m<10) m='0'+m;
+  if (s<10) s='0'+s;
+  if (ms<10) ms='0'+ms;
+  timertext.textContent =  m + ':' + s + ':' + ms; 
+  return d
+ }
+function findTIME() {
+   clocktimer = setInterval("startTIME()", 9);
+} 
 
 
-const getUserById = () => {
+start.addEventListener('click', Timer.prototype.start)
 
-    const id = (document.querySelector('#txt')).value;
-    fetch(`https://test-users-api.herokuapp.com/users/${id}`)
-        .then(response => {
-            if (response.ok) return response.json();
-            throw new Error("Error");
-        })
-        .then(user => {
-            const object = user
-            outputUser.textContent = JSON.stringify(`name: ${object.data.name}, age: ${object.data.age}`);
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        })
+function create () {
+  let stopwatch = new Timer(Timer.startTime, Timer.stopTime, Timer.interval);
+     console.log(stopwatch)
 }
 
-
-const addUser = () => {
-    const name = (document.querySelector('#name')).value;
-    const age = (document.querySelector('#age')).value;
-    fetch('https://test-users-api.herokuapp.com/users', {
-            method: 'POST',
-            body: JSON.stringify({
-                name: name,
-                age: age
-            }),
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => {
-            if (response.ok) return response.json();
-            throw new Error("Error");
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        })
-};
-
-
-
-const removeUser = () => {
-
-    const id = (document.querySelector('#dlt')).value;
-    fetch(`https://test-users-api.herokuapp.com/users/${id}`, {
-            method: 'DELETE'
-        })
-        .then(response => {
-            if (response.ok) return response.json();
-            throw new Error("Error");
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        })
-};
-
-
-const updateUser = () => {
-    const id = (document.querySelector('#remove')).value;
-    const newName = (document.querySelector('#new-name')).value;
-    const newAge = (document.querySelector('#new-age')).value;
-    fetch(`https://test-users-api.herokuapp.com/users/${id}`, {
-            method: 'PUT',
-            body: JSON.stringify({
-                name: newName,
-                age: newAge
-            }),
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
-        .then(response => {
-            if (response.ok) return response.json();
-            throw new Error("Error");
-        })
-        .catch(error => {
-            console.error("Error:", error);
-        })
-}
-
-getUsers.addEventListener("click", getAllUsers);
-userById.addEventListener("click", getUserById);
-submit.addEventListener("click", addUser);
-delet.addEventListener("click", removeUser);
-remove.addEventListener("click", updateUser);
+stop.addEventListener('click', Timer.prototype.stop)
+stop.addEventListener('click', create)
